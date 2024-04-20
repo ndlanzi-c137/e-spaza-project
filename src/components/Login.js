@@ -7,21 +7,21 @@ import { Link } from "react-router-dom"
 const Login = () => {
 
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    // const [email, setEmail] = useState('');
+    // const [password, setPassword] = useState('');
 
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-    };
+    // const handleEmailChange = (e) => {
+    //     setEmail(e.target.value);
+    // };
 
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
+    // const handlePasswordChange = (e) => {
+    //     setPassword(e.target.value);
+    // };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Add your Login logic here
-    };
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     // Add your Login logic here
+    // };
 
     return (
      
