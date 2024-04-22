@@ -13,11 +13,11 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4",
     "@babel/plugin-transform-nullish-coalescing-operator": "^7.24.1", 
-    "@babel/plugin-transform-numeric-separator": "^7.24.1.",
-    "@babel/plugin-transform-class-properties": "^7.24.1.",
-    "@babel/plugin-transform-private-methods": "^7.24.1.",
-    "@babel/plugin-transform-optional-chaining": "^7.24.1.",
-    "@rollup/plugin-terser": "^7.24.1."
+    "@babel/plugin-transform-numeric-separator": "^7.24.1",
+    "@babel/plugin-transform-class-properties": "^7.24.1",
+    "@babel/plugin-transform-private-methods": "^7.24.1",
+    "@babel/plugin-transform-optional-chaining": "^7.24.1",
+    "@rollup/plugin-terser": "^7.24.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -44,7 +44,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.24.1."
+    "@babel/plugin-proposal-private-property-in-object": "^7.24.1"
 
   }
 }
