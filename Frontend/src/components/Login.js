@@ -42,7 +42,10 @@ const Login = () => {
                         navigate('/shopperdashboard'); // Navigate to shopper dashboard
                     } else if (data.user.role === 'staff') {
                         navigate('/staffdashboard'); // Navigate to staff dashboard
-                    }else {
+                    } else if(data.user.role === 'admin'){
+                        navigate('/admindashboard'); // Navigate to admin dashboard
+                    }
+                    else {
                         throw new Error('Unknown role');
                     }
                     

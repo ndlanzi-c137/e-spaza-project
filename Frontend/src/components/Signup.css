@@ -74,6 +74,12 @@
   .social-button img {
     width: 24px;
   }
+
+  .error {
+    color: #ff0000; /* Red color for error message */
+    font-size: 14px; /* Adjust font size */
+    margin-top: 5px; /* Add some spacing above the error message */
+  }
   
   /* Graphic side styles */
   

@@ -21,6 +21,14 @@ const SignUp = () => {
         e.preventDefault();
         setError(''); // Clear previous errors
 
+        // Password validation rules
+        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+
+        if (!passwordRegex.test(password)) {
+            setError('Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.');
+            return;
+        }
+
         try {
             const response = await fetch('http://localhost:8081/signup', {
                 method: 'POST',
