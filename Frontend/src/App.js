@@ -4,6 +4,7 @@ import Login from './components/Login';
 import ShopperDashboard from './components/ShopperDashboard';
 import StaffDashboard from './components/StaffDashboard';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import AdminDashboard from './components/AdminDashboard';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/signup" element={<Signup/>}/>
           <Route path="/shopperdashboard" element={<ShopperDashboard/>}/>
           <Route path="/staffdashboard" element={<StaffDashboard />} />
+          <Route path="/admindashboard" element={<AdminDashboard/>} />
         </Routes>
       </Router>
     </div>
