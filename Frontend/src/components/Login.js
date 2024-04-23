@@ -45,6 +45,7 @@ const Login = () => {
                     }else {
                         throw new Error('Unknown role');
                     }
+                    
                     // Redirect or manage the login state here
                 } else {
                     throw new Error(data.message || 'Unable to login');

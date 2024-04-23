@@ -38,7 +38,6 @@ const port = process.env.PORT || 8081;
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
-
 app.post('/login', async (req, res) => {
     const { email, password } = req.body; // Destructure email and password from request body
     try {
