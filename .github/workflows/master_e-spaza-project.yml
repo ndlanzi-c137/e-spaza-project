@@ -1,3 +1,6 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
 name: Build and deploy Node.js app to Azure Web App - e-spaza-project
 
 on:
@@ -16,16 +19,16 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: "18.x"
+          node-version: '18.x'
 
-      - name: npm install, build
+      - name: npm install, build, and test
         run: |
           npm install
           npm run build --if-present
-        working-directory: ./e-spaza-project/Frontend
+          npm run test --if-present
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip ./e-spaza-project/Frontend/*
+        run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
@@ -37,8 +40,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: "Production"
+      name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    permissions:
+      id-token: write #This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
@@ -47,18 +52,20 @@ jobs:
           name: node-app
 
       - name: Unzip artifact for deployment
-        run: unzip release.zip -d deploy
-
+        run: unzip release.zip
+      
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_5B29243873084D738B80D85DEE239266 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_632ABD21813540238E165EDF7645A45D }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C07BD28ED66D458DBD6FE4CC69C6B095 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_5C831E4C5D574892BD2297E4F2002700 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_9845C0FD397C411E833E714DA8DBD94B }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_811F7BD0506F4F0DB1F04ECFEA1D3EDF }}
 
-      - name: Deploy to Azure Web App
+      - name: 'Deploy to Azure Web App'
+        id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: "e-spaza-project"
-          slot-name: "Production"
-          package: ./deploy/e-spaza-project/Frontend
+          app-name: 'e-spaza-project'
+          slot-name: 'Production'
+          package: .
+          
