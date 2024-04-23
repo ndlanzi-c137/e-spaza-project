@@ -1,6 +1,3 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build and deploy Node.js app to Azure Web App - e-spaza-project
 
 on:
@@ -25,9 +22,10 @@ jobs:
         run: |
           npm install
           npm run build --if-present
+        working-directory: ./e-spaza-project/Frontend
 
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+        run: zip -r release.zip ./e-spaza-project/Frontend/*
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
@@ -41,8 +39,6 @@ jobs:
     environment:
       name: "Production"
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
@@ -51,7 +47,7 @@ jobs:
           name: node-app
 
       - name: Unzip artifact for deployment
-        run: unzip release.zip
+        run: unzip release.zip -d deploy
 
       - name: Login to Azure
         uses: azure/login@v1
@@ -60,10 +56,9 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_632ABD21813540238E165EDF7645A45D }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C07BD28ED66D458DBD6FE4CC69C6B095 }}
 
-      - name: "Deploy to Azure Web App"
-        id: deploy-to-webapp
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: "e-spaza-project"
           slot-name: "Production"
-          package: .
+          package: ./deploy/e-spaza-project/Frontend
