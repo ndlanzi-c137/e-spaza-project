@@ -5,7 +5,7 @@
   
   .graphic-side {
     flex: 1;
-   /* background: /* Add your graphic background here */;
+    background: /* Add your graphic background here */;
   }
   
   .form-side {
@@ -79,7 +79,7 @@
   
   .graphic-side {
     flex: 1;
-   /* background: /* Add your graphic background here */;
+    background: /* Add your graphic background here */;
     display: flex;
     align-items: flex-end; /* Align items to the bottom */
     justify-content: center; /* Center items horizontally */

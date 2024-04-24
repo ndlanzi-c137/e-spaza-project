@@ -5,7 +5,7 @@
   
   .graphic-side {
     flex: 1;
-   /* background: /* Add your graphic background here */;
+    background: /* Add your graphic background here */;
   }
   
   .form-side {
@@ -74,18 +74,12 @@
   .social-button img {
     width: 24px;
   }
-
-  .error {
-    color: #ff0000; /* Red color for error message */
-    font-size: 14px; /* Adjust font size */
-    margin-top: 5px; /* Add some spacing above the error message */
-  }
   
   /* Graphic side styles */
   
   .graphic-side {
     flex: 1;
-   /* background: /* Add your graphic background here */;
+    background: /* Add your graphic background here */;
     display: flex;
     align-items: flex-end; /* Align items to the bottom */
     justify-content: center; /* Center items horizontally */
