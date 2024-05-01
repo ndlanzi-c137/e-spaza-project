@@ -1,5 +1,9 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
+import Navbar from './Shopper/Navbar';
+import Category from './Shopper/Categories';
+import Food from './Shopper/Food';
+import Spazas from './Shopper/Spazas';
 
 function ShopperDashboard() {
   const navigate = useNavigate();
@@ -10,10 +14,17 @@ function ShopperDashboard() {
     navigate('/');
 };
   return (
-    <div style={{display: 'flex', flexDirection: "column", justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <h1>SHOPPER DASHBOARD</h1>
-      <button className="logout-button" onClick={handleLogout}>Logout</button>
-    </div>
+    <div style={{backgroundColor: '#fcf9f9'}}>
+    <Navbar />
+    <Category />
+    <Spazas /> 
+    <Food />
+    {/* <Hero />
+    <HeadlineCards />
+    
+    */}
+</div>
+
   );
 }
 
