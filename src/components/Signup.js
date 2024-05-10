@@ -95,10 +95,6 @@ const SignUp = () => {
                             <img src={googleIcon} alt="Sign up with Google" />
                             Sign up with Google
                         </button>
-                        <button className="social-button github">
-                            <img src={githubIcon} alt="Sign up with GitHub" />
-                            Sign in with GitHub
-                        </button>
                     </div>
                 </footer>
             </section>

@@ -99,10 +99,6 @@ const Login = () => {
                             <img src={googleIcon} alt="Sign in with Google" />
                             Sign in with Google
                         </button>
-                        <button className="social-button github">
-                            <img src={githubIcon} alt="Sign up with GitHub" />
-                            Sign in with GitHub
-                        </button>
                     </div>
                 </footer>
             </section>
