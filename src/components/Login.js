@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import './Login.css';
+import { auth, db } from '../firebaseConfig'; // Ensure the correct path
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { Link, useNavigate } from "react-router-dom";
 import googleIcon from '../icons/google.png';
 import githubIcon from '../icons/github.png';
-import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -10,58 +13,56 @@ const Login = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate(); 
 
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-    };
+    const handleEmailChange = (e) => setEmail(e.target.value);
+    const handlePasswordChange = (e) => setPassword(e.target.value);
 
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const handleSubmit = async (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        setError('');  // Clear previous errors
-    
+        setError('');
         try {
-            const response = await fetch('http://localhost:8081/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
-    
-            const contentType = response.headers.get("content-type");
-            if (contentType && contentType.includes("application/json")) {
-                const data = await response.json();
-                if (response.ok) {
-                    console.log('Login successful:', data);
-                    
-
-                    if (data.user.role === 'shopper') {
-                        navigate('/shopperdashboard'); // Navigate to shopper dashboard
-                    } else if (data.user.role === 'staff') {
-                        navigate('/staffdashboard'); // Navigate to staff dashboard
-                    } else if(data.user.role === 'admin'){
-                        navigate('/admindashboard'); // Navigate to admin dashboard
-                    }
-                    else {
-                        throw new Error('Unknown role');
-                    }
-                    
-                    // Redirect or manage the login state here
-                } else {
-                    throw new Error(data.message || 'Unable to login');
-                }
-            } else {
-                throw new Error('Response is not in JSON format');
-            }
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            navigateBasedOnRole(userCredential.user.uid);
         } catch (err) {
-            setError(err.message);
-            console.error('Login failed:', err);
+            setError('Login failed. Please check your credentials and try again.');
         }
     };
-     
+
+    const handleGoogleSignIn = async () => {
+        const provider = new GoogleAuthProvider();
+        try {
+            const result = await signInWithPopup(auth, provider);
+            navigateBasedOnRole(result.user.uid);
+        } catch (err) {
+            setError('Google sign-in failed. Please try again.');
+        }
+    };
+
+    const navigateBasedOnRole = async (uid) => {
+        try {
+            const userRef = doc(db, "users", uid);
+            const docSnap = await getDoc(userRef);
+            if (docSnap.exists()) {
+                const { role } = docSnap.data();
+                switch (role) {
+                    case 'shopper':
+                        navigate('/shopperdashboard');
+                        break;
+                    case 'staff':
+                        navigate('/staffdashboard');
+                        break;
+                    case 'admin':
+                        navigate('/admindashboard');
+                        break;
+                    default:
+                        throw new Error('Unknown role');
+                }
+            } else {
+                throw new Error('User data not found');
+            }
+        } catch (err) {
+            setError('Error determining user role. Please contact support.');
+        }
+    };
 
     return (
         <div className="Login">
@@ -78,7 +79,7 @@ const Login = () => {
                 <header className="header">
                     <h1>Login</h1>
                 </header>
-                <form className="sign-up-form" onSubmit={handleSubmit}>
+                <form className="sign-up-form" onSubmit={handleLogin}>
                     <div className="input-group">
                         <label htmlFor="email">Email</label>
                         <input type="email" id="email" value={email} onChange={handleEmailChange} placeholder="Enter your Email here" />
@@ -88,19 +89,15 @@ const Login = () => {
                         <input type="password" id="password" value={password} onChange={handlePasswordChange} placeholder="Enter your Password here" />
                     </div>
                     <button type="submit" className="create-account">Login</button>
-                    {error && <p className="error">{error}</p>}  {/* Display error message */}
+                    {error && <p className="error">{error}</p>}
                 </form>
                 <footer className="footer">
-                    <p>Don't have an account Yet ?  <Link to="/signup">Signup</Link> </p>
+                    <p>Don't have an account yet? <Link to="/signup">Signup</Link></p>
                     <div className="divider">- OR -</div>
                     <div className="social-login">
-                        <button className="social-button google">
-                            <img src={googleIcon} alt="Sign up with Google" />
+                        <button className="social-button google" onClick={handleGoogleSignIn}>
+                            <img src={googleIcon} alt="Sign in with Google" />
                             Sign in with Google
-                        </button>
-                        <button className="social-button github">
-                            <img src={githubIcon} alt="Sign up with GitHub" />
-                            Sign in with GitHub
                         </button>
                     </div>
                 </footer>

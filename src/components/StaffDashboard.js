@@ -1,19 +1,24 @@
-import React from 'react';
+import React from "react";
+import "./AdminDashboard.css";
+import { useNavigate } from "react-router-dom";
 
-function StaffDashboard() {
+function StaffDashboard(){
 
-  const handleClick = () => {
-    window.location.href = '/staffdashboard'; // Navigate to '/otherpage'
-  };
-  
-  return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontSize: '48px' }}>
-      <h1>STAFF DASHBOARD</h1>
-      <button onClick={handleClick}>
-      Log Out
-    </button>
-    </div>
-  );
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        // Perform logout actions, such as clearing authentication tokens or session data
+        // For simplicity, let's just navigate back to the login page
+        navigate('/');
+    };
+
+
+    return(
+        <div style={{display: 'flex', flexDirection: "column", justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <h1>STAFF DASHBOARD</h1>
+            <button className="logout-button" onClick={handleLogout}>Logout</button>
+        </div>
+    );
 }
 
 export default StaffDashboard;
