@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { data } from "../../data/data.js";
-import { useStateValue } from "./StateProvider";
+import { useStateValue } from "./StateProvider.js";
 
 const Food = () => {
   const [foods, setFoods] = useState(data);
@@ -15,18 +15,19 @@ const Food = () => {
     setFoods(data.filter((item) => item.price === price));
   };
 
-  const [state, dispatch] = useStateValue();
-  const addToCart = () => {
+  const [basket, dispatch] = useStateValue();
+  console.log("This is the basket>>>", basket);
+  const addToCart = (id, title, image, price) => {
     //dispatch the item into the data layer
-    // dispatch({
-    //   type: 'ADD_TO_CART',
-    //   item:{
-    //     id:id,
-    //     title:title,
-    //     image:image,
-    //     price:price,
-    //   }
-    // })
+    dispatch({
+      type: "ADD_TO_CART",
+      item: {
+        id: id,
+        title: title,
+        image: image,
+        price: price,
+      },
+    });
   };
 
   return (
@@ -246,7 +247,7 @@ const Food = () => {
                     borderRadius: "9999px",
                   }}
                 >
-                  {item.price}
+                  R{item.price}
                 </span>
                 <button
                   className="add__toCart"
@@ -260,7 +261,9 @@ const Food = () => {
                     alignItems: "center",
                     borderRadius: "10px",
                   }}
-                  onClick={addToCart}
+                  onClick={() =>
+                    addToCart(item.id, item.name, item.image, item.price)
+                  }
                 >
                   Add to cart
                 </button>

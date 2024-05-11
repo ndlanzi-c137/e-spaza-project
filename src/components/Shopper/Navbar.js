@@ -12,9 +12,11 @@ import { MdFavorite, MdHelp } from "react-icons/md";
 import { TbTruckDelivery } from "react-icons/tb";
 import Checkout from "./Checkout";
 import { Link } from "react-router-dom";
+import { useStateValue } from "./StateProvider";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
+  const [{ basket }, dispatch] = useStateValue();
 
   const navigate = useNavigate();
 
@@ -126,7 +128,18 @@ const Navbar = () => {
             cursor: "pointer",
           }}
         >
-          <BsFillCartFill size={20} style={{ marginRight: "8px" }} /> Cart
+          <BsFillCartFill size={20} style={{ marginRight: "8px" }} />{" "}
+          <p
+            className="numberOf_items"
+            style={{
+              fontWeight: "bold",
+              textDecoration: "none",
+              borderBottom: "none",
+              marginRight: "10px",
+            }}
+          >
+            {basket?.length}
+          </p>
         </button>
       </Link>
 
