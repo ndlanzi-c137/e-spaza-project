@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import '../Signup.css';
 import { auth, db } from '../../firebaseConfig'; // Correct import path
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import googleIcon from '../../icons/google.png';
+import { Link, useNavigate } from "react-router-dom";
 
 const SignupShopper = () => {
   const [name, setName] = useState('');
@@ -52,6 +53,19 @@ const SignupShopper = () => {
     }
   };
 
+  const handleGoogleSignUp = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+        const result = await signInWithPopup(auth, provider);
+        const userRef = doc(db, "users", result.user.uid);
+        await setDoc(userRef, { name: result.user.displayName, email: result.user.email, role: 'shopper' }); // Default role as shopper for Google users
+        navigate('/');
+    } catch (error) {
+        setError(error.message || "Google sign-in failed. Please try again.");
+    }
+};
+
+
   return (
     <div className="SignUp">
       <aside className="graphic-side">
@@ -82,6 +96,16 @@ const SignupShopper = () => {
           <button type="submit" className="create-account">Create Account</button>
           {error && <p className="error">{error}</p>}
         </form>
+        <footer className="footer">
+                    <p>Already have an account? <Link to="/">Login</Link></p>
+                    <div className="divider">- OR -</div>
+                    <div className="social-login">
+                        <button className="social-button google" onClick={handleGoogleSignUp}>
+                            <img src={googleIcon} alt="Sign up with Google" />
+                            Sign up with Google
+                        </button>
+                    </div>
+        </footer>
       </section>
     </div>
   );

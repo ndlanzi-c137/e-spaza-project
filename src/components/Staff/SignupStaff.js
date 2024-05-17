@@ -3,7 +3,7 @@ import '../Signup.css';
 import { auth, db } from '../../firebaseConfig'; // Correct import path
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, getDocs, doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignupStaff = () => {
     const [name, setName] = useState('');
@@ -107,6 +107,9 @@ const SignupStaff = () => {
                     <button type="submit" className="create-account">Create Account</button>
                     {error && <p className="error">{error}</p>}
                 </form>
+                <footer className="footer">
+                    <p>Already have an account? <Link to="/">Login</Link></p>
+                </footer>
             </section>
         </div>
     );

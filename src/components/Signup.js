@@ -4,7 +4,6 @@ import { auth, db } from '../firebaseConfig'; // Correct import path
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import googleIcon from '../icons/google.png';
-import githubIcon from '../icons/github.png';
 import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
