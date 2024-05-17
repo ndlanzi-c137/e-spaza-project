@@ -8,6 +8,13 @@ const Spazas = () => {
   const [filteredShops, setFilteredShops] = useState([]);
   const navigate = useNavigate();
 
+  const categoryMap = {
+    'mini-supermarket': 'MSM',
+    'fast-food': 'FF',
+    'tuck-shop': 'TS',
+    'Spaza': 'Spaza' // Add this if you have a category called 'Spaza'
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const shopsCollection = collection(db, 'shops');
@@ -28,10 +35,6 @@ const Spazas = () => {
     setFilteredShops(shops.filter((item) => item.category === category));
   };
 
-  const filterPrice = (price) => {
-    setFilteredShops(shops.filter((item) => item.price === price));
-  };
-
   return (
     <div style={{ maxWidth: '1640px', margin: 'auto', padding: '16px' }}>
       <h1 style={{ color: '#2ECC40', fontWeight: 'bold', fontSize: '2.5rem', textAlign: 'center' }}>
@@ -43,9 +46,9 @@ const Spazas = () => {
           <p style={{ fontWeight: 'bold', color: '#000000' }}>Filter Price</p>
           <div style={{ display: 'flex', justifyContent: 'flex-start', maxWidth: '390px', width: '100%' }}>
             <button onClick={() => setFilteredShops(shops)} style={{ margin: '4px', border: '1px solid #2ECC40', color: '#2ECC40', padding: '4px 8px', backgroundColor: 'transparent', cursor: 'pointer' }}>All</button>
-            <button onClick={() => filterPrice('Low')} style={{ margin: '4px', border: '1px solid #2ECC40', color: '#2ECC40', padding: '4px 8px', backgroundColor: 'transparent', cursor: 'pointer' }}>Low</button>
-            <button onClick={() => filterPrice('Medium')} style={{ margin: '4px', border: '1px solid #2ECC40', color: '#2ECC40', padding: '4px 8px', backgroundColor: 'transparent', cursor: 'pointer' }}>Medium</button>
-            <button onClick={() => filterPrice('High')} style={{ margin: '4px', border: '1px solid #2ECC40', color: '#2ECC40', padding: '4px 8px', backgroundColor: 'transparent', cursor: 'pointer' }}>High</button>
+            <button onClick={() => filterType('mini-supermarket')} style={{ margin: '4px', border: '1px solid #2ECC40', color: '#2ECC40', padding: '4px 8px', backgroundColor: 'transparent', cursor: 'pointer' }}>Mini-Supermarket</button>
+            <button onClick={() => filterType('fast-food')} style={{ margin: '4px', border: '1px solid #2ECC40', color: '#2ECC40', padding: '4px 8px', backgroundColor: 'transparent', cursor: 'pointer' }}>Fast-Food</button>
+            <button onClick={() => filterType('tuck-shop')} style={{ margin: '4px', border: '1px solid #2ECC40', color: '#2ECC40', padding: '4px 8px', backgroundColor: 'transparent', cursor: 'pointer' }}>Tuck-Shop</button>
           </div>
         </div>
       </div>
@@ -56,7 +59,7 @@ const Spazas = () => {
             <img src={item.image} alt={item.name} style={{ width: '100%', height: '200px', objectFit: 'cover', borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }} />
             <div style={{ padding: '8px', display: 'flex', justifyContent: 'space-between' }}>
               <p style={{ fontWeight: 'bold' }}>{item.name}</p>
-              <p><span style={{ backgroundColor: '#2ECC40', color: 'white', padding: '4px', borderRadius: '9999px' }}>{item.price}</span></p>
+              <p><span style={{ backgroundColor: '#2ECC40', color: 'white', padding: '4px', borderRadius: '9999px' }}>{categoryMap[item.category]}</span></p>
             </div>
           </div>
         ))}

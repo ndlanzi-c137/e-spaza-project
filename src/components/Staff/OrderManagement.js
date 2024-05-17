@@ -1,12 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { db } from '../../firebaseConfig';
+import { collection, getDocs, updateDoc, doc, query, where } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 const OrderManagement = () => {
-  const [orders, setOrders] = useState([
-    { id: 1, customer: 'John Doe', status: 'Pending' },
-    { id: 2, customer: 'Jane Smith', status: 'Completed' }
-  ]);
+  const [orders, setOrders] = useState([]);
+  const [shopId, setShopId] = useState(null);
+  const auth = getAuth();
 
-  const completeOrder = (orderId) => {
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const q = query(collection(db, 'users'), where('email', '==', user.email));
+        const userDoc = await getDocs(q);
+        if (!userDoc.empty) {
+          const userData = userDoc.docs[0].data();
+          setShopId(userData.shopId);
+          fetchOrders(userData.shopId);
+        }
+      }
+    };
+
+    const fetchOrders = async (shopId) => {
+      const q = query(collection(db, 'orders'), where('shopId', '==', shopId));
+      const ordersSnapshot = await getDocs(q);
+      const ordersList = ordersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setOrders(ordersList);
+    };
+
+    fetchCurrentUser();
+  }, [auth]);
+
+  const completeOrder = async (orderId) => {
+    const orderDoc = doc(db, 'orders', orderId);
+    await updateDoc(orderDoc, { status: 'Completed' });
     setOrders(orders.map(order => order.id === orderId ? { ...order, status: 'Completed' } : order));
   };
 
