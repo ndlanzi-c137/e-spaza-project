@@ -16,7 +16,7 @@ jobs:
           command: npm test -- --coverage
       - run:
           name: Upload coverage to Codecov
-          command: npx codecov --token=$CODECOV_TOKEN
+          command: npx codecov --token=$CODECOV_TOKEN --file=./coverage/lcov.info --disable=gcov 
 
   build-node:
     executor: node/default
