@@ -38,13 +38,16 @@ const Login = () => {
     };
 
     const navigateBasedOnRole = async (uid) => {
+        console.log('navigateBasedOnRole called with uid:', uid);
         try {
             const userRef = doc(db, "users", uid);
             const docSnap = await getDoc(userRef);
             if (docSnap.exists()) {
                 const { role } = docSnap.data();
+                console.log('User role:', role);
                 switch (role) {
                     case 'shopper':
+                        console.log('Navigating to /shopperdashboard');
                         navigate('/shopperdashboard');
                         break;
                     case 'staff':
