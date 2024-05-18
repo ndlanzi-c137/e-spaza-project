@@ -1,4 +1,5 @@
 version: 2.1
+
 orbs:
   codecov: codecov/codecov@4.0.1
   node: circleci/node@5
@@ -16,9 +17,6 @@ jobs:
       - run:
           name: Upload coverage to Codecov
           command: npx codecov
-      - store_artifacts:
-          path: coverage
-          destination: coverage
 
   build-node:
     executor: node/default
@@ -50,13 +48,12 @@ jobs:
           command: ':'
 
 workflows:
-  upload-to-codecov:
-    jobs:
-      - checkout 
-      - codecov/upload
   build-and-test:
     jobs:
       - test-node
       - build-node:
           requires:
             - test-node
+  upload-to-codecov:
+    jobs:
+      - test-node
