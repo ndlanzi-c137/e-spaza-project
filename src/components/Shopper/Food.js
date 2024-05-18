@@ -19,6 +19,7 @@ const Food = () => {
   console.log("This is the basket>>>", basket);
   const addToCart = (id, title, image, price) => {
     //dispatch the item into the data layer
+    //this 
     dispatch({
       type: "ADD_TO_CART",
       item: {
