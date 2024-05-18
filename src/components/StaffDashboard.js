@@ -1,6 +1,9 @@
 import React from "react";
 import "./AdminDashboard.css";
 import { useNavigate } from "react-router-dom";
+import InventoryManagement from "./Staff/InventoryManagement";
+import OrderManagement from "./Staff/OrderManagement";
+import Navbar from "./Shopper/Navbar";
 
 function StaffDashboard(){
 
@@ -14,10 +17,11 @@ function StaffDashboard(){
 
 
     return(
-        <div style={{display: 'flex', flexDirection: "column", justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <h1>STAFF DASHBOARD</h1>
-            <button className="logout-button" onClick={handleLogout}>Logout</button>
-        </div>
+    <div style={{backgroundColor: '#fcf9f9'}}>
+    <Navbar />
+    <InventoryManagement/>
+    <OrderManagement /> 
+    </div>
     );
 }
 

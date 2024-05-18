@@ -92,7 +92,7 @@ const Login = () => {
                     {error && <p className="error">{error}</p>}
                 </form>
                 <footer className="footer">
-                    <p>Don't have an account yet? <Link to="/signup">Signup</Link></p>
+                    <p>Don't have an account yet? <Link to="/signup-options">Signup</Link></p>
                     <div className="divider">- OR -</div>
                     <div className="social-login">
                         <button className="social-button google" onClick={handleGoogleSignIn}>
