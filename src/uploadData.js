@@ -30,4 +30,38 @@ const uploadData = async () => {
   }
 };
 
-uploadData();
+const addOrders = async () => {
+  const ordersCollection = collection(db, 'orders');
+  
+  // Define the shopper ID
+  const shopperId = "2ECoi9W7ImPCvYEor8B6p63ZCpB2";
+  const shopId = "O59samwwsqT9dl0paYo6tWIPWY72";
+  
+  // Define the orders
+  const orders = [
+    {
+      shopperId: shopperId,
+      shopId: shopId,
+      items: [
+        { name: "Amasi", quantity: 4, price: 20 },
+      ],
+      total: 40,
+      status: "pending",
+      createdAt: new Date()
+    },
+
+  ];
+
+  try {
+    // Add each order to the Firestore collection
+    for (const order of orders) {
+      await addDoc(ordersCollection, order);
+    }
+    console.log("Orders successfully added.");
+  } catch (e) {
+    console.error("Error adding orders: ", e);
+  }
+};
+
+//uploadData();
+addOrders();
