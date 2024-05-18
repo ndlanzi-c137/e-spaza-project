@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  codecov: codecov/codecov@3
+  codecov: codecov/codecov@4.0.1
   node: circleci/node@5
 
 jobs:
@@ -13,12 +13,12 @@ jobs:
       - run:
           name: Run tests with coverage
           command: npm test -- --coverage
-      - store_artifacts:
-          path: coverage
-          destination: coverage
       - run:
           name: Upload coverage to Codecov
           command: npx codecov
+      - store_artifacts:
+          path: coverage
+          destination: coverage
 
   build-node:
     executor: node/default
@@ -56,7 +56,3 @@ workflows:
       - build-node:
           requires:
             - test-node
-    # Uncomment the following lines if you want to include the deploy job
-    # - deploy:
-    #     requires:
-    #       - build-node
