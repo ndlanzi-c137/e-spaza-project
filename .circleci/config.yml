@@ -50,6 +50,10 @@ jobs:
           command: ':'
 
 workflows:
+  upload-to-codecov:
+    jobs:
+      - checkout 
+      - codecov/upload
   build-and-test:
     jobs:
       - test-node
