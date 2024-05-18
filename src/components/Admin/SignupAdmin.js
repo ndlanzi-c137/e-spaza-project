@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import './Signup.css';
-import { auth, db } from '../firebaseConfig'; // Correct import path
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-import googleIcon from '../icons/google.png';
+import '../Signup.css';
+import { auth, db } from '../../firebaseConfig'; // Correct import path
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 
-const SignUp = () => {
+const SignupAdmin = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole] = useState('');
+    const [shopName, setShopName] = useState('');
+    const [shopCategory, setShopCategory] = useState('');
+    const [shopImage, setShopImage] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -27,23 +28,39 @@ const SignUp = () => {
 
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const userRef = doc(db, "users", userCredential.user.uid);
-            await setDoc(userRef, { name, email, role });
-            navigate('/'); // Navigate to home on successful sign up
+            const user = userCredential.user;
+
+            // Fetch and increment the current highest id
+            const counterRef = doc(db, 'counters', 'userCounter');
+            const counterSnap = await getDoc(counterRef);
+            let newId = 1;
+            if (counterSnap.exists()) {
+                newId = counterSnap.data().currentId + 1;
+                await updateDoc(counterRef, { currentId: newId });
+            } else {
+                await setDoc(counterRef, { currentId: newId });
+            }
+
+            // Create shop document
+            await setDoc(doc(db, 'shops', user.uid), {
+                name: shopName,
+                category: shopCategory,
+                image: shopImage,
+                adminId: user.uid
+            });
+
+            // Create user document
+            await setDoc(doc(db, 'users', user.uid), {
+                id: newId,
+                name,
+                email,
+                role: 'admin',
+                shopId: user.uid
+            });
+
+            navigate('/admindashboard'); // Navigate to admin dashboard on successful sign up
         } catch (err) {
             setError(err.message || "Signup failed. Please try again.");
-        }
-    };
-
-    const handleGoogleSignUp = async () => {
-        const provider = new GoogleAuthProvider();
-        try {
-            const result = await signInWithPopup(auth, provider);
-            const userRef = doc(db, "users", result.user.uid);
-            await setDoc(userRef, { name: result.user.displayName, email: result.user.email, role: 'shopper' }); // Default role as shopper for Google users
-            navigate('/');
-        } catch (error) {
-            setError(error.message || "Google sign-in failed. Please try again.");
         }
     };
 
@@ -59,7 +76,7 @@ const SignUp = () => {
             </aside>
             <section className="form-side">
                 <header className="header">
-                    <h1>Create your Free Account</h1>
+                    <h1>Create your Admin Account</h1>
                 </header>
                 <form className="sign-up-form" onSubmit={handleSubmit}>
                     <div className="input-group">
@@ -75,30 +92,31 @@ const SignUp = () => {
                         <input type="password" id="password" value={password} onChange={handleInputChange(setPassword)} placeholder="Enter your Password here" />
                     </div>
                     <div className="input-group">
-                        <label htmlFor="role">Role</label>
-                        <select id="role" value={role} onChange={handleInputChange(setRole)}>
-                            <option value="">Select Role</option>
-                            <option value="shopper">Shopper</option>
-                            <option value="staff">Staff</option>
-                            <option value="admin">Admin</option>
+                        <label htmlFor="shop-name">Shop Name</label>
+                        <input type="text" id="shop-name" value={shopName} onChange={handleInputChange(setShopName)} placeholder="Enter your Shop Name here" />
+                    </div>
+                    <div className="input-group">
+                        <label htmlFor="shop-category">Shop Category</label>
+                        <select id="shop-category" value={shopCategory} onChange={handleInputChange(setShopCategory)}>
+                            <option value="">Select Category</option>
+                            <option value="mini-supermarket">mini-supermarket</option>
+                            <option value="fast-food">fast-food</option>
+                            <option value="tuck-shop">tuck-shop</option>
                         </select>
+                    </div>
+                    <div className="input-group">
+                        <label htmlFor="shop-image">Shop Image URL</label>
+                        <input type="text" id="shop-image" value={shopImage} onChange={handleInputChange(setShopImage)} placeholder="Enter your Shop Image URL here" />
                     </div>
                     <button type="submit" className="create-account">Create Account</button>
                     {error && <p className="error">{error}</p>}
                 </form>
                 <footer className="footer">
                     <p>Already have an account? <Link to="/">Login</Link></p>
-                    <div className="divider">- OR -</div>
-                    <div className="social-login">
-                        <button className="social-button google" onClick={handleGoogleSignUp}>
-                            <img src={googleIcon} alt="Sign up with Google" />
-                            Sign up with Google
-                        </button>
-                    </div>
                 </footer>
             </section>
         </div>
     );
 };
 
-export default SignUp;
+export default SignupAdmin;
