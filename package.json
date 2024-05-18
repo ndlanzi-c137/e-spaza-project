@@ -24,7 +24,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "CI=false react-scripts build",
-    "test": "jest",
+    "test": "jest --coverage",
+    "codecov": "npx codecov",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
