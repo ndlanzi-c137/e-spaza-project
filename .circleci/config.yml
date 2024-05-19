@@ -1,8 +1,8 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@5
   codecov: codecov/codecov@4.0.1
+  node: circleci/node@5
 
 jobs:
   test-node:
@@ -15,11 +15,8 @@ jobs:
           name: Run tests with coverage
           command: npm test -- --coverage
       - run:
-          name: Install Codecov uploader
-          command: npm install -g codecov
-      - run:
           name: Upload coverage to Codecov
-          command: codecov
+          command: npx codecov --token=$CODECOV_TOKEN --file=./coverage/lcov.info --disable=gcov 
 
   build-node:
     executor: node/default
