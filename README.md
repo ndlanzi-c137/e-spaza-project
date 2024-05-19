@@ -1,3 +1,10 @@
+#Code Coverage
+[![Coverage Status](https://coveralls.io/repos/github/ndlanzi-c137/e-spaza-project/badge.svg)](https://coveralls.io/github/ndlanzi-c137/e-spaza-project)
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
