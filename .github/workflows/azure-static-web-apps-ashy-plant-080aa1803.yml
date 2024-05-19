@@ -33,8 +33,6 @@ jobs:
           output_location: "build" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
 
-      - name: Coveralls GitHub Action
-        uses: coverallsapp/github-action@v2.3.0
       
 
   close_pull_request_job:
