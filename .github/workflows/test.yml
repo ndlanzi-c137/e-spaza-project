@@ -13,10 +13,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
+      - run: npm install coveralls --save-dev
       - run: npm test -- --coverage
       - name: Upload coverage to Coveralls
         run: |
-          npm install coveralls
-          cat ./coverage/lcov.info | coveralls
+          npx coveralls < ./coverage/lcov.info
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
