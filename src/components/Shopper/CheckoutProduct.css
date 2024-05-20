@@ -1,0 +1,33 @@
+.checkout__Product {
+  display: flex;
+  flex-direction: column; /* Ensure products are in a column */
+  gap: 10px;
+  margin-top: 10px;
+  font-weight: 300;
+  color: black;
+}
+.checkoutProduct__image {
+  display: flex;
+  width: 100px;
+
+  border-color: lightgreen;
+}
+.checkoutProduct__title {
+  font-size: medium;
+  color: black;
+  font-weight: 600;
+}
+.checkoutProduct__info > button {
+  background: lightgreen;
+  border: 1px solid;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-color: darkgray;
+  padding: 5px;
+}
+.checkoutProduct__price {
+  background-color: white;
+  color: black;
+  padding: 5px;
+  border-radius: 5px;
+}
