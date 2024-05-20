@@ -65,7 +65,7 @@ const InventoryManagement = () => {
         name: newItemName,
         quantity: parseInt(newItemQuantity, 10),
         price: parseFloat(newItemPrice),
-        shopId: shop.id,
+        shopId: shop,
         imageUrl: newItemImageUrl
       };
       const docRef = await addDoc(collection(db, 'inventory'), newItem);
@@ -73,6 +73,7 @@ const InventoryManagement = () => {
       setNewItemName('');
       setNewItemQuantity('');
       setNewItemPrice('');
+      setNewItemImageUrl('');
     }
   };
 
