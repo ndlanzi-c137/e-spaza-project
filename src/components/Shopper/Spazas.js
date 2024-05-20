@@ -43,7 +43,7 @@ const Spazas = () => {
 
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', marginBottom: '16px' }}>
         <div>
-          <p style={{ fontWeight: 'bold', color: '#000000' }}>Filter Price</p>
+          <p style={{ fontWeight: 'bold', color: '#000000' }}>Filter Type</p>
           <div style={{ display: 'flex', justifyContent: 'flex-start', maxWidth: '390px', width: '100%' }}>
             <button onClick={() => setFilteredShops(shops)} style={{ margin: '4px', border: '1px solid #2ECC40', color: '#2ECC40', padding: '4px 8px', backgroundColor: 'transparent', cursor: 'pointer' }}>All</button>
             <button onClick={() => filterType('mini-supermarket')} style={{ margin: '4px', border: '1px solid #2ECC40', color: '#2ECC40', padding: '4px 8px', backgroundColor: 'transparent', cursor: 'pointer' }}>Mini-Supermarket</button>
