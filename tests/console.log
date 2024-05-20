@@ -1,0 +1,9 @@
+Current user email: testadmin@example.com
+Error fetching current user: TypeError: Cannot read properties of undefined (reading '_query')
+Current user email: testadmin@example.com
+Error fetching current user: TypeError: Cannot read properties of undefined (reading '_query')
+Current user email: testadmin@example.com
+Error fetching current user: TypeError: Cannot read properties of undefined (reading '_query')
+Current user email: testshopper@example.com
+Error fetching current user: TypeError: Cannot read properties of undefined (reading '_query')
+Logs have been saved to: D:\COURSE MODULES\code\e-spaza-project\tests\console.log
