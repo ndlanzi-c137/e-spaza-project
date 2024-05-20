@@ -9,6 +9,7 @@ const InventoryManagement = () => {
   const [newItemName, setNewItemName] = useState('');
   const [newItemQuantity, setNewItemQuantity] = useState('');
   const [newItemPrice, setNewItemPrice] = useState('');
+  const [newItemImageUrl, setNewItemImageUrl] = useState('');
   const auth = getAuth();
 
   useEffect(() => {
@@ -64,13 +65,17 @@ const InventoryManagement = () => {
         name: newItemName,
         quantity: parseInt(newItemQuantity, 10),
         price: parseFloat(newItemPrice),
-        shopId: shop.id
+
+        shopId: shopId,
+        imageUrl: newItemImageUrl
+
       };
       const docRef = await addDoc(collection(db, 'inventory'), newItem);
       setInventory([...inventory, { id: docRef.id, ...newItem }]);
       setNewItemName('');
       setNewItemQuantity('');
       setNewItemPrice('');
+      setNewItemImageUrl('');
     }
   };
 
@@ -98,6 +103,7 @@ const InventoryManagement = () => {
         <input type="text" value={newItemName} onChange={(e) => setNewItemName(e.target.value)} placeholder="Item Name" style={{ marginRight: '8px' }} />
         <input type="number" value={newItemQuantity} onChange={(e) => setNewItemQuantity(e.target.value)} placeholder="Quantity" style={{ marginRight: '8px' }} />
         <input type="number" value={newItemPrice} onChange={(e) => setNewItemPrice(e.target.value)} placeholder="Price" step="0.01" style={{ marginRight: '8px' }} />
+        <input type="text" value={newItemImageUrl} onChange={(e) => setNewItemImageUrl(e.target.value)} placeholder="Image URL" style={{ marginRight: '8px' }} />
         <button onClick={handleAddItem} style={{ padding: '8px 16px', backgroundColor: '#2ECC40', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
           Add Item
         </button>

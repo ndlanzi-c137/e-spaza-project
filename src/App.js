@@ -12,6 +12,7 @@ import Categories from './components/Shopper/Categories';
 import SignupShopper from './components/Shopper/SignupShopper';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdminDashboard from './components/AdminDashboard';
+import Checkout from './components/Shopper/Checkout';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/signup-staff" element={<SignupStaff />} />
           <Route path="/signup-shopper" element={<SignupShopper />} />
           <Route path="/shopperdashboard" element={<ShopperDashboard/>}/>
+          <Route path='/checkout' element={<Checkout/>}/>
           <Route path="/staffdashboard" element={<StaffDashboard />} />
           <Route path="/admindashboard" element={<AdminDashboard/>} />
           <Route path="/category/:categoryName" element={<Food />} />
