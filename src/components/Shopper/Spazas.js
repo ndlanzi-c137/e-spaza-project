@@ -1,40 +1,25 @@
-<<<<<<< HEAD
-import React, { useState } from "react";
-import { shops } from "../../data/data.js";
-=======
-import React, { useState, useEffect } from 'react';
-import { db } from '../../firebaseConfig';
-import { collection, getDocs } from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom';
->>>>>>> 258941d227436367138f28f3f837cb35b4b9b135
+import React, { useState, useEffect } from "react";
+import { db } from "../../firebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const Spazas = () => {
   const [shops, setShops] = useState([]);
   const [filteredShops, setFilteredShops] = useState([]);
   const navigate = useNavigate();
 
-<<<<<<< HEAD
-  // Filter Type burgers/pizza/etc
-  const filterType = (category) => {
-    setFoods(shops.filter((item) => item.category === category));
-  };
-
-  // Filter by price
-  const filterPrice = (price) => {
-    setFoods(shops.filter((item) => item.price === price));
-=======
   const categoryMap = {
-    'mini-supermarket': 'MSM',
-    'fast-food': 'FF',
-    'tuck-shop': 'TS',
-    'Spaza': 'Spaza' // Add this if you have a category called 'Spaza'
+    "mini-supermarket": "MSM",
+    "fast-food": "FF",
+    "tuck-shop": "TS",
+    Spaza: "Spaza",
   };
 
   useEffect(() => {
     const fetchData = async () => {
-      const shopsCollection = collection(db, 'shops');
+      const shopsCollection = collection(db, "shops");
       const shopsSnapshot = await getDocs(shopsCollection);
-      const shopsList = shopsSnapshot.docs.map(doc => doc.data());
+      const shopsList = shopsSnapshot.docs.map((doc) => doc.data());
       setShops(shopsList);
       setFilteredShops(shopsList);
     };
@@ -48,7 +33,10 @@ const Spazas = () => {
 
   const filterType = (category) => {
     setFilteredShops(shops.filter((item) => item.category === category));
->>>>>>> 258941d227436367138f28f3f837cb35b4b9b135
+  };
+
+  const filterPrice = (price) => {
+    setFilteredShops(shops.filter((item) => item.price === price));
   };
 
   return (
@@ -64,7 +52,6 @@ const Spazas = () => {
         Spaza Shops
       </h1>
 
-<<<<<<< HEAD
       {/* Filter Row */}
       <div
         style={{
@@ -74,7 +61,6 @@ const Spazas = () => {
           marginBottom: "16px",
         }}
       >
-        {/* Filter Price */}
         <div>
           <p style={{ fontWeight: "bold", color: "#000000" }}>Filter Price</p>
           <div
@@ -86,7 +72,7 @@ const Spazas = () => {
             }}
           >
             <button
-              onClick={() => setFoods(shops)}
+              onClick={() => setFilteredShops(shops)}
               style={{
                 margin: "4px",
                 border: "1px solid #2ECC40",
@@ -137,22 +123,76 @@ const Spazas = () => {
             >
               High
             </button>
-=======
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', marginBottom: '16px' }}>
+          </div>
+        </div>
+
         <div>
-          <p style={{ fontWeight: 'bold', color: '#000000' }}>Filter Price</p>
-          <div style={{ display: 'flex', justifyContent: 'flex-start', maxWidth: '390px', width: '100%' }}>
-            <button onClick={() => setFilteredShops(shops)} style={{ margin: '4px', border: '1px solid #2ECC40', color: '#2ECC40', padding: '4px 8px', backgroundColor: 'transparent', cursor: 'pointer' }}>All</button>
-            <button onClick={() => filterType('mini-supermarket')} style={{ margin: '4px', border: '1px solid #2ECC40', color: '#2ECC40', padding: '4px 8px', backgroundColor: 'transparent', cursor: 'pointer' }}>Mini-Supermarket</button>
-            <button onClick={() => filterType('fast-food')} style={{ margin: '4px', border: '1px solid #2ECC40', color: '#2ECC40', padding: '4px 8px', backgroundColor: 'transparent', cursor: 'pointer' }}>Fast-Food</button>
-            <button onClick={() => filterType('tuck-shop')} style={{ margin: '4px', border: '1px solid #2ECC40', color: '#2ECC40', padding: '4px 8px', backgroundColor: 'transparent', cursor: 'pointer' }}>Tuck-Shop</button>
->>>>>>> 258941d227436367138f28f3f837cb35b4b9b135
+          <p style={{ fontWeight: "bold", color: "#000000" }}>Filter Type</p>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+              maxWidth: "390px",
+              width: "100%",
+            }}
+          >
+            <button
+              onClick={() => setFilteredShops(shops)}
+              style={{
+                margin: "4px",
+                border: "1px solid #2ECC40",
+                color: "#2ECC40",
+                padding: "4px 8px",
+                backgroundColor: "transparent",
+                cursor: "pointer",
+              }}
+            >
+              All
+            </button>
+            <button
+              onClick={() => filterType("mini-supermarket")}
+              style={{
+                margin: "4px",
+                border: "1px solid #2ECC40",
+                color: "#2ECC40",
+                padding: "4px 8px",
+                backgroundColor: "transparent",
+                cursor: "pointer",
+              }}
+            >
+              Mini-Supermarket
+            </button>
+            <button
+              onClick={() => filterType("fast-food")}
+              style={{
+                margin: "4px",
+                border: "1px solid #2ECC40",
+                color: "#2ECC40",
+                padding: "4px 8px",
+                backgroundColor: "transparent",
+                cursor: "pointer",
+              }}
+            >
+              Fast-Food
+            </button>
+            <button
+              onClick={() => filterType("tuck-shop")}
+              style={{
+                margin: "4px",
+                border: "1px solid #2ECC40",
+                color: "#2ECC40",
+                padding: "4px 8px",
+                backgroundColor: "transparent",
+                cursor: "pointer",
+              }}
+            >
+              Tuck-Shop
+            </button>
           </div>
         </div>
       </div>
 
-<<<<<<< HEAD
-      {/* Display foods */}
+      {/* Display Shops */}
       <div
         style={{
           display: "grid",
@@ -162,15 +202,16 @@ const Spazas = () => {
           justifyContent: "center",
         }}
       >
-        {foods.map((item, index) => (
+        {filteredShops.map((item, index) => (
           <div
             key={index}
+            onClick={() => handleShopClick(item.name)}
             style={{
               border: "1px solid #E2E8F0",
               borderRadius: "8px",
               boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
               transition: "transform 0.3s ease",
-              ":hover": { transform: "scale(1.05)" },
+              cursor: "pointer",
             }}
           >
             <img
@@ -201,18 +242,9 @@ const Spazas = () => {
                     borderRadius: "9999px",
                   }}
                 >
-                  {item.price}
+                  {categoryMap[item.category]}
                 </span>
               </p>
-=======
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 200px))', gap: '24px', paddingTop: '16px', justifyContent: 'center' }}>
-        {filteredShops.map((item, index) => (
-          <div key={index} onClick={() => handleShopClick(item.name)} style={{ border: '1px solid #E2E8F0', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', transition: 'transform 0.3s ease', cursor: 'pointer' }}>
-            <img src={item.image} alt={item.name} style={{ width: '100%', height: '200px', objectFit: 'cover', borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }} />
-            <div style={{ padding: '8px', display: 'flex', justifyContent: 'space-between' }}>
-              <p style={{ fontWeight: 'bold' }}>{item.name}</p>
-              <p><span style={{ backgroundColor: '#2ECC40', color: 'white', padding: '4px', borderRadius: '9999px' }}>{categoryMap[item.category]}</span></p>
->>>>>>> 258941d227436367138f28f3f837cb35b4b9b135
             </div>
           </div>
         ))}

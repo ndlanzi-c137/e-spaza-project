@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   AiOutlineMenu,
@@ -11,36 +10,22 @@ import { BsFillCartFill, BsFillSaveFill } from "react-icons/bs";
 import { FaUserFriends, FaWallet } from "react-icons/fa";
 import { MdFavorite, MdHelp } from "react-icons/md";
 import { TbTruckDelivery } from "react-icons/tb";
-import Checkout from "./Checkout";
+import { db } from "../../firebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { useStateValue } from "./StateProvider";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
-  const [{ basket }, dispatch] = useStateValue();
-
-=======
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
-import { AiOutlineMenu, AiOutlineSearch, AiOutlineClose, AiFillTag } from 'react-icons/ai';
-import { BsFillCartFill, BsFillSaveFill } from 'react-icons/bs';
-import { FaUserFriends, FaWallet } from 'react-icons/fa';
-import { MdFavorite, MdHelp } from 'react-icons/md';
-import { TbTruckDelivery } from 'react-icons/tb';
-import { db } from '../../firebaseConfig';
-import { collection, getDocs } from 'firebase/firestore';
-
-const Navbar = () => {
-  const [nav, setNav] = useState(false);
   const [categories, setCategories] = useState([]);
->>>>>>> 258941d227436367138f28f3f837cb35b4b9b135
+  const [{ basket }, dispatch] = useStateValue();
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const categoriesCollection = collection(db, 'categories');
+      const categoriesCollection = collection(db, "categories");
       const categoriesSnapshot = await getDocs(categoriesCollection);
-      const categoriesList = categoriesSnapshot.docs.map(doc => doc.data());
+      const categoriesList = categoriesSnapshot.docs.map((doc) => doc.data());
       setCategories(categoriesList);
     };
 
@@ -48,13 +33,7 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    // Perform logout actions, such as clearing authentication tokens or session data
-    // For simplicity, let's just navigate back to the login page
-<<<<<<< HEAD
     navigate("/");
-=======
-    navigate('/');
->>>>>>> 258941d227436367138f28f3f837cb35b4b9b135
   };
 
   return (
@@ -226,7 +205,6 @@ const Navbar = () => {
           E-Spaza
         </h2>
         <nav>
-<<<<<<< HEAD
           <ul style={{ listStyle: "none", padding: "0", color: "#2ECC40" }}>
             <li
               style={{
@@ -301,21 +279,9 @@ const Navbar = () => {
               <FaUserFriends size={25} style={{ marginRight: "8px" }} /> Invite
               Friends
             </li>
-
             <button className="logout-button" onClick={handleLogout}>
               Logout
             </button>
-=======
-          <ul style={{ listStyle: 'none', padding: '0', color: '#2ECC40' }}>
-            <li style={{ fontSize: '1rem', padding: '16px 0', display: 'flex', alignItems: 'center' }}><TbTruckDelivery size={25} style={{ marginRight: '8px' }} /> Orders</li>
-            <li style={{ fontSize: '1rem', padding: '16px 0', display: 'flex', alignItems: 'center' }}><MdFavorite size={25} style={{ marginRight: '8px' }} /> Favorites</li>
-            <li style={{ fontSize: '1rem', padding: '16px 0', display: 'flex', alignItems: 'center' }}><FaWallet size={25} style={{ marginRight: '8px' }} /> Wallet</li>
-            <li style={{ fontSize: '1rem', padding: '16px 0', display: 'flex', alignItems: 'center' }}><MdHelp size={25} style={{ marginRight: '8px' }} /> Help</li>
-            <li style={{ fontSize: '1rem', padding: '16px 0', display: 'flex', alignItems: 'center' }}><AiFillTag size={25} style={{ marginRight: '8px' }} /> Promotions</li>
-            <li style={{ fontSize: '1rem', padding: '16px 0', display: 'flex', alignItems: 'center' }}><BsFillSaveFill size={25} style={{ marginRight: '8px' }} /> Best Ones</li>
-            <li style={{ fontSize: '1rem', padding: '16px 0', display: 'flex', alignItems: 'center' }}><FaUserFriends size={25} style={{ marginRight: '8px' }} /> Invite Friends</li>
-            <button className="logout-button" onClick={handleLogout}>Logout</button>
->>>>>>> 258941d227436367138f28f3f837cb35b4b9b135
           </ul>
         </nav>
       </div>
