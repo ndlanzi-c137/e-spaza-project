@@ -65,10 +65,8 @@ const InventoryManagement = () => {
         name: newItemName,
         quantity: parseInt(newItemQuantity, 10),
         price: parseFloat(newItemPrice),
-
         shopId: shop.id,
         imageUrl: newItemImageUrl
-
       };
       const docRef = await addDoc(collection(db, 'inventory'), newItem);
       setInventory([...inventory, { id: docRef.id, ...newItem }]);
@@ -107,6 +105,7 @@ const InventoryManagement = () => {
         <button onClick={handleAddItem} style={{ padding: '8px 16px', backgroundColor: '#2ECC40', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
           Add Item
         </button>
+  
       </div>
     </div>
   );
