@@ -187,6 +187,7 @@ const Food = () => {
               >
                 Add to cart
               </button>
+
             </div>
           </div>
         ))}

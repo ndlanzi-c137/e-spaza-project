@@ -15,6 +15,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { useStateValue } from "./StateProvider";
 
+
 const Navbar = () => {
   const [nav, setNav] = useState(false);
   const [categories, setCategories] = useState([]);
@@ -33,7 +34,9 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    navigate("/");
+    // Perform logout actions, such as clearing authentication tokens or session data
+    // For simplicity, let's just navigate back to the login page
+    navigate('/');
   };
 
   return (
