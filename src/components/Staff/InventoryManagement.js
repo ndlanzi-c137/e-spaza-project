@@ -66,7 +66,7 @@ const InventoryManagement = () => {
         quantity: parseInt(newItemQuantity, 10),
         price: parseFloat(newItemPrice),
 
-        shopId: shopId,
+        shopId: shop.id,
         imageUrl: newItemImageUrl
 
       };
