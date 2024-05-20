@@ -44,32 +44,35 @@ const Login = () => {
     }
   };
 
-  const navigateBasedOnRole = async (uid) => {
-    try {
-      const userRef = doc(db, "users", uid);
-      const docSnap = await getDoc(userRef);
-      if (docSnap.exists()) {
-        const { role } = docSnap.data();
-        switch (role) {
-          case "shopper":
-            navigate("/shopperdashboard");
-            break;
-          case "staff":
-            navigate("/staffdashboard");
-            break;
-          case "admin":
-            navigate("/admindashboard");
-            break;
-          default:
-            throw new Error("Unknown role");
+    const navigateBasedOnRole = async (uid) => {
+        console.log('navigateBasedOnRole called with uid:', uid);
+        try {
+            const userRef = doc(db, "users", uid);
+            const docSnap = await getDoc(userRef);
+            if (docSnap.exists()) {
+                const { role } = docSnap.data();
+                console.log('User role:', role);
+                switch (role) {
+                    case 'shopper':
+                        console.log('Navigating to /shopperdashboard');
+                        navigate('/shopperdashboard');
+                        break;
+                    case 'staff':
+                        navigate('/staffdashboard');
+                        break;
+                    case 'admin':
+                        navigate('/admindashboard');
+                        break;
+                    default:
+                        throw new Error('Unknown role');
+                }
+            } else {
+                throw new Error('User data not found');
+            }
+        } catch (err) {
+            setError('Error determining user role. Please contact support.');
         }
-      } else {
-        throw new Error("User data not found");
-      }
-    } catch (err) {
-      setError("Error determining user role. Please contact support.");
-    }
-  };
+    };
 
   return (
     <div className="Login">
@@ -94,54 +97,35 @@ const Login = () => {
         </div>
       </aside>
 
-      <section className="form-side">
-        <header className="header">
-          <h1>Login</h1>
-        </header>
-        <form className="sign-up-form" onSubmit={handleLogin}>
-          <div className="input-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={handleEmailChange}
-              placeholder="Enter your Email here"
-            />
-          </div>
-          <div className="input-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={handlePasswordChange}
-              placeholder="Enter your Password here"
-            />
-          </div>
-          <button type="submit" className="create-account">
-            Login
-          </button>
-          {error && <p className="error">{error}</p>}
-        </form>
-        <footer className="footer">
-          <p>
-            Don't have an account yet? <Link to="/signup-options">Signup</Link>
-          </p>
-          <div className="divider">- OR -</div>
-          <div className="social-login">
-            <button
-              className="social-button google"
-              onClick={handleGoogleSignIn}
-            >
-              <img src={googleIcon} alt="Sign in with Google" />
-              Sign in with Google
-            </button>
-          </div>
-        </footer>
-      </section>
-    </div>
-  );
+            <section className="form-side">
+                <header className="header">
+                    <h1>Login</h1>
+                </header>
+                <form className="sign-up-form" onSubmit={handleLogin}>
+                    <div className="input-group">
+                        <label htmlFor="email">Email</label>
+                        <input type="email" id="email" value={email} onChange={handleEmailChange} placeholder="Enter your Email here" />
+                    </div>
+                    <div className="input-group">
+                        <label htmlFor="password">Password</label>
+                        <input type="password" id="password" value={password} onChange={handlePasswordChange} placeholder="Enter your Password here" />
+                    </div>
+                    <button type="submit" className="create-account">Login</button>
+                    {error && <p className="error">{error}</p>}
+                </form>
+                <footer className="footer">
+                    <p>Don't have an account yet? <Link to="/signup-options">Signup</Link></p>
+                    <div className="divider">- OR -</div>
+                    <div className="social-login">
+                        <button className="social-button google" onClick={handleGoogleSignIn}>
+                            <img src={googleIcon} alt="Sign in with Google" />
+                            Sign in with Google
+                        </button>
+                    </div>
+                </footer>
+            </section>
+        </div>
+    );
 };
 
 export default Login;
