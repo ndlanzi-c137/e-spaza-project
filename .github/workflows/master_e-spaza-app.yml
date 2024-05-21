@@ -65,3 +65,7 @@ jobs:
           app-name: 'e-spaza-app'
           slot-name: 'Production'
           package: .
+
+      - name: Install production dependencies with legacy peer deps
+        run: |
+          npm install --legacy-peer-deps --production
