@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install --legacy-peer-deps
-      - run: npm install coveralls --save-dev
+      - run: npm install coveralls --save-dev --legacy-peer-deps
       - run: npm test -- --coverage
       - name: Upload coverage to Coveralls
         run: |
