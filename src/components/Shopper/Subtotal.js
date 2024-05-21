@@ -12,7 +12,7 @@ function Subtotal() {
   const navigate = useNavigate();
 
   const proceedToCheckout = async () => {
-    const shopperId = "2ECoi9W7ImPCvYEor8B6p63ZCpB2";  // Replace with actual shopper ID
+    const shopperId = "2ECoi9W7ImPCvYEor8B6p63ZCpB2";  
     const shopId = "O59samwwsqT9dl0paYo6tWIPWY72";    
     const result = await uploadOrders(basket, shopperId, shopId);
 
