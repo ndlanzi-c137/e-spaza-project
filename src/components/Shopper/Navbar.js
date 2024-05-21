@@ -27,8 +27,6 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    // Perform logout actions, such as clearing authentication tokens or session data
-    // For simplicity, let's just navigate back to the login page
     navigate('/');
   };
 
