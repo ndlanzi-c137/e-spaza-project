@@ -1,20 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  AiOutlineMenu,
-  AiOutlineSearch,
-  AiOutlineClose,
-  AiFillTag,
-} from "react-icons/ai";
+import { useNavigate, Link } from "react-router-dom";
+import { AiOutlineMenu, AiOutlineSearch, AiOutlineClose, AiFillTag } from "react-icons/ai";
 import { BsFillCartFill, BsFillSaveFill } from "react-icons/bs";
 import { FaUserFriends, FaWallet } from "react-icons/fa";
 import { MdFavorite, MdHelp } from "react-icons/md";
 import { TbTruckDelivery } from "react-icons/tb";
 import { db } from "../../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
-import { Link } from "react-router-dom";
 import { useStateValue } from "./StateProvider";
-
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
@@ -67,27 +60,6 @@ const Navbar = () => {
         >
           E-Spaza
         </h1>
-        <div
-          style={{
-            display: "none",
-            background: "#c3e6cb",
-            borderRadius: "9999px",
-            padding: "4px",
-            marginLeft: "8px",
-          }}
-        >
-          <p
-            style={{
-              backgroundColor: "#2ECC40",
-              color: "white",
-              borderRadius: "9999px",
-              padding: "8px",
-              margin: "0",
-            }}
-          >
-            Pickup
-          </p>
-        </div>
       </div>
 
       {/* Search Input */}
@@ -153,6 +125,27 @@ const Navbar = () => {
           >
             {basket?.length}
           </p>
+        </button>
+      </Link>
+
+      {/* Orders link */}
+      <Link to="/order-history">
+        <button
+          className="order__history__button"
+          style={{
+            background: "#c7eec9",
+            color: "#2ECC40",
+            borderRadius: "9999px",
+            display: "flex",
+            alignItems: "center",
+            padding: "8px 16px",
+            border: "none",
+            cursor: "pointer",
+            marginLeft: "10px",
+          }}
+        >
+          <TbTruckDelivery size={20} style={{ marginRight: "8px" }} />{" "}
+          Orders
         </button>
       </Link>
 

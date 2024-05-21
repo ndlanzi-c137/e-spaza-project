@@ -63,5 +63,35 @@ const addOrders = async () => {
   }
 };
 
+// Add this function to uploadData.js
+const uploadOrders = async (basket, shopperId, shopId) => {
+  const ordersCollection = collection(db, 'orders');
+
+  const order = {
+    shopperId: shopperId,
+    shopId: shopId,
+    items: basket.map(item => ({
+      name: item.title,
+      quantity: 1,
+      price: item.price,
+    })),
+    total: basket.reduce((total, item) => total + item.price, 0),
+    status: "pending",
+    createdAt: new Date(),
+  };
+
+  try {
+    await addDoc(ordersCollection, order);
+    console.log("Order successfully added.");
+    return { success: true, message: "Order placed successfully!" };
+  } catch (e) {
+    console.error("Error adding order: ", e);
+    return { success: false, message: "Error placing order. Please try again." };
+  }
+};
+
+
 //uploadData();
-addOrders();
+//addOrders();
+
+export { uploadOrders };

@@ -1,4 +1,5 @@
-import React from 'react';
+import React,  { useEffect }  from 'react';
+import { auth } from "./firebaseConfig";
 import Signup from './components/Signup';
 import Login from './components/Login';
 import ShopperDashboard from './components/ShopperDashboard';
@@ -13,8 +14,23 @@ import SignupShopper from './components/Shopper/SignupShopper';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdminDashboard from './components/AdminDashboard';
 import Checkout from './components/Shopper/Checkout';
+import OrderHistory from './components/Shopper/OrderHistory';
+import OrderStatus from "./components/Shopper/OrderStatus";
 
 function App() {
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        console.log("User logged in:", user);
+      } else {
+        console.log("User logged out");
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+
   return (
     <div className="App">
      
@@ -31,6 +47,8 @@ function App() {
           <Route path="/staffdashboard" element={<StaffDashboard />} />
           <Route path="/admindashboard" element={<AdminDashboard/>} />
           <Route path="/category/:categoryName" element={<Food />} />
+           <Route path="/order-history" element={<OrderHistory />} />
+          <Route path="/order-status" element={<OrderStatus />} />
           <Route path="/shop/:shopName" element={<Spazas />}
           />
         </Routes>
