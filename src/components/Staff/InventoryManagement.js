@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../../firebaseConfig';
 import { collection, getDocs, addDoc, updateDoc, doc, query, where } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const InventoryManagement = () => {
   const [inventory, setInventory] = useState([]);
@@ -40,6 +42,7 @@ const InventoryManagement = () => {
     const itemDoc = doc(db, 'inventory', itemId);
     await updateDoc(itemDoc, { quantity: newQuantity });
     setInventory(inventory.map(item => item.id === itemId ? { ...item, quantity: newQuantity } : item));
+    toast.success(`Item quantity updated to ${newQuantity}`);
   };
 
   const handleAddItem = async () => {
@@ -57,6 +60,7 @@ const InventoryManagement = () => {
       setNewItemQuantity('');
       setNewItemPrice('');
       setNewItemImageUrl('');
+      toast.success(`Item ${newItemName} added successfully`);
     }
   };
 
@@ -83,6 +87,7 @@ const InventoryManagement = () => {
           Add Item
         </button>
       </div>
+      <ToastContainer />
     </div>
   );
 };

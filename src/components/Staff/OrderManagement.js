@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../../firebaseConfig';
 import { collection, getDocs, updateDoc, doc, query, where, getDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const OrderManagement = () => {
   const [orders, setOrders] = useState([]);
@@ -60,6 +62,7 @@ const OrderManagement = () => {
     await updateDoc(orderDoc, { status: newStatus });
     setOrders(orders.map(order => order.id === orderId ? { ...order, status: newStatus } : order));
     console.log(`Order ${orderId} status updated to ${newStatus}`);
+    toast.success(`Order ${orderId} status updated to ${newStatus}`);
   };
 
   return (
@@ -103,6 +106,7 @@ const OrderManagement = () => {
           </li>
         ))}
       </ul>
+      <ToastContainer />
     </div>
   );
 };

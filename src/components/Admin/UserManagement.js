@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../../firebaseConfig';
 import { collection, getDocs, getDoc, deleteDoc, doc, updateDoc, query, where } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UserManagement = () => {
   const [users, setUsers] = useState({ staff: [], shoppers: [] });
@@ -78,8 +80,10 @@ const UserManagement = () => {
         staff: users.staff.filter(user => user.docId !== userId),
         shoppers: users.shoppers.filter(user => user.docId !== userId)
       });
+      toast.success('User removed successfully');
     } catch (error) {
       console.error('Error removing user:', error);
+      toast.error('Failed to remove user');
     }
   };
 
@@ -101,8 +105,10 @@ const UserManagement = () => {
         staff: prevUsers.staff.map(user => user.docId === userId ? { ...user, role: newRole } : user),
         shoppers: prevUsers.shoppers.map(user => user.docId === userId ? { ...user, role: newRole } : user)
       }));
+      toast.success('User role changed successfully');
     } catch (error) {
       console.error("Error updating document:", error);
+      toast.error('Failed to change user role');
     }
   };
 
@@ -149,6 +155,7 @@ const UserManagement = () => {
           </li>
         )) : <li>No shoppers found.</li>}
       </ul>
+      <ToastContainer />
     </div>
   );
 };
