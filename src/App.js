@@ -18,18 +18,6 @@ import OrderHistory from './components/Shopper/OrderHistory';
 import OrderStatus from "./components/Shopper/OrderStatus";
 
 function App() {
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        console.log("User logged in:", user);
-      } else {
-        console.log("User logged out");
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
 
   return (
     <div className="App">
