@@ -53,7 +53,7 @@ const Food = () => {
         id: id,
         title: title,
         image: image,
-        price: price,
+        price: price,  // Ensure price is included here
       },
     });
   };
@@ -187,7 +187,6 @@ const Food = () => {
               >
                 Add to cart
               </button>
-
             </div>
           </div>
         ))}
