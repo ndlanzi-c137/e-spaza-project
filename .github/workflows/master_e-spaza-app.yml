@@ -24,17 +24,17 @@ jobs:
 
       - name: Build the app
         run: |
-          npm run build --if-present
-      
+          npm run build
+
       - name: Run tests
         run: |
-          npm run test --if-present
+          npm run test
       
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: node-app
-          path: .
+          name: build
+          path: build
 
   deploy:
     runs-on: ubuntu-latest
@@ -49,7 +49,8 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
-          name: node-app
+          name: build
+          path: build
       
       - name: Login to Azure
         uses: azure/login@v1
@@ -64,8 +65,4 @@ jobs:
         with:
           app-name: 'e-spaza-app'
           slot-name: 'Production'
-          package: .
-
-      - name: Install production dependencies with legacy peer deps
-        run: |
-          npm install --legacy-peer-deps --production
+          package: build

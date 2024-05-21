@@ -24,8 +24,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "node server.js",
-    "build": "CI=false react-scripts build",
+    "start": "react-scripts start",
+    "build": "set CI=false&& react-scripts build",
     "test": "jest --coverage",
     "codecov": "npx codecov",
     "eject": "react-scripts eject"
