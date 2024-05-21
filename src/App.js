@@ -1,5 +1,4 @@
 import React from 'react';
-import Signup from './components/Signup';
 import Login from './components/Login';
 import ShopperDashboard from './components/ShopperDashboard';
 import StaffDashboard from './components/StaffDashboard';
@@ -21,7 +20,6 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Login/>}/>
-          <Route path="/signup" element={<Signup/>}/>
           <Route path="/signup-options" element={<SignupOptions />} />
           <Route path="/signup-admin" element={<SignupAdmin />} />
           <Route path="/signup-staff" element={<SignupStaff />} />
