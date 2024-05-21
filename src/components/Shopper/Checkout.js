@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Checkout.css";
 import Subtotal from "./Subtotal";
 import { useStateValue } from "./StateProvider";
@@ -14,9 +14,11 @@ function Checkout() {
           <h2 className="checkout__title">Your shopping Basket</h2>
           {basket.map((item) => (
             <CheckoutProduct
+              key={item.id}
               id={item.id}
               title={item.title}
               image={item.image}
+              price={item.price} 
             />
           ))}
         </div>
