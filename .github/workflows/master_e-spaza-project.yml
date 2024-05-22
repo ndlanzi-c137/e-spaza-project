@@ -21,17 +21,23 @@ jobs:
         with:
           node-version: '18.x'
 
-      - name: npm install, build, and test
+      - name: Install dependencies with legacy peer deps
         run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
+          npm install --legacy-peer-deps
+
+      - name: Build the app
+        run: |
+          npm run build
+
+      - name: Run tests
+        run: |
+          npm run test
       
-      - name: Upload artifact for deployment job
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: node-app
-          path: .
+          name: build
+          path: build
 
   deploy:
     runs-on: ubuntu-latest
@@ -40,13 +46,14 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write # This is required for requesting the JWT
 
     steps:
-      - name: Download artifact from build job
+      - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
-          name: node-app
+          name: build
+          path: build
       
       - name: Login to Azure
         uses: azure/login@v1
