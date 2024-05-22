@@ -1,8 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Node.js app to Azure Web App - e-spaza-web
-
+name: Build and deploy Node.js app to Azure Web App - e-spaza-project
 
 on:
   push:
@@ -59,14 +58,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D553399E9D294899A2B9553FEFF05AB9 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_C07DF2C79E3A4DC783D33FB04C0D5027 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_280FA2E07B5840BFAA6E4ED67898204A }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_5BE3DEB2F3B74C99A0F723854928ADDB }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_7922292D26CF48749C0652DE39548B13 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_9D3E6C72CDBC4ACA8D7149C84A0A0BB7 }}
 
-      - name: Deploy to Azure Web App
+      - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
-          app-name: 'e-spaza-web'
+          app-name: 'e-spaza-project'
           slot-name: 'Production'
-          package: build
+          package: .
+          
