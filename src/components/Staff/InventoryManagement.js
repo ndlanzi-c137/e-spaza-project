@@ -46,6 +46,8 @@ const InventoryManagement = () => {
   };
 
   const handleAddItem = async () => {
+    console.log('handleAddItem called');
+    console.log('Current shopId:', shopId);
     if (newItemName && newItemQuantity && newItemPrice && shopId) {
       const newItem = {
         name: newItemName,
@@ -54,6 +56,7 @@ const InventoryManagement = () => {
         shopId: shopId,
         imageUrl: newItemImageUrl
       };
+      console.log('Adding new item:', newItem);
       const docRef = await addDoc(collection(db, 'inventory'), newItem);
       setInventory([...inventory, { id: docRef.id, ...newItem }]);
       setNewItemName('');
@@ -61,6 +64,8 @@ const InventoryManagement = () => {
       setNewItemPrice('');
       setNewItemImageUrl('');
       toast.success(`Item ${newItemName} added successfully`);
+    } else {
+      console.log('Failed to add item. Missing required fields or shopId.');
     }
   };
 

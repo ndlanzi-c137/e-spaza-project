@@ -22,11 +22,11 @@ jest.mock('firebase/firestore', () => ({
     docs: [
       {
         id: '1',
-        data: () => ({ name: 'Item 1', quantity: 10, price: 5 })
+        data: () => ({shopId: 'shop1', name: 'Item 1', quantity: 10, price: 5 })
       },
       {
         id: '2',
-        data: () => ({ name: 'Item 2', quantity: 5, price: 10 })
+        data: () => ({shopId: 'shop1', name: 'Item 2', quantity: 5, price: 10 })
       }
     ]
   }),
@@ -89,6 +89,8 @@ describe('InventoryManagement Component', () => {
     fireEvent.click(screen.getByText('Add Item'));
 
     console.log(screen.debug());
+
+    
     await waitFor(() => {
       expect(addDoc).toHaveBeenCalled();
       expect(screen.getByText('Item New Item added successfully')).toBeInTheDocument();
