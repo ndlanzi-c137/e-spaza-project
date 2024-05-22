@@ -131,4 +131,86 @@ describe('Login Component', () => {
 
     await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith('/shopperdashboard'));
   });
+
+  it('should navigate to staff dashboard', async () => {
+    signInWithEmailAndPassword.mockResolvedValue({ user: { uid: 'testuid' } });
+    getDoc.mockResolvedValue({ exists: jest.fn().mockReturnValue(true), data: jest.fn().mockReturnValue({ role: 'staff' }) });
+
+    await act(async () => {
+      render(
+        <Router>
+          <Login />
+        </Router>
+      );
+    });
+
+    fireEvent.change(screen.getByLabelText(/email/i), { target: { value: 'test@example.com' } });
+    fireEvent.change(screen.getByLabelText(/password/i), { target: { value: 'password' } });
+    fireEvent.click(screen.getByRole('button', { name: /login/i }));
+
+    await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith('/staffdashboard'));
+  });
+
+  it('should navigate to admin dashboard', async () => {
+    signInWithEmailAndPassword.mockResolvedValue({ user: { uid: 'testuid' } });
+    getDoc.mockResolvedValue({ exists: jest.fn().mockReturnValue(true), data: jest.fn().mockReturnValue({ role: 'admin' }) });
+
+    await act(async () => {
+      render(
+        <Router>
+          <Login />
+        </Router>
+      );
+    });
+
+    fireEvent.change(screen.getByLabelText(/email/i), { target: { value: 'test@example.com' } });
+    fireEvent.change(screen.getByLabelText(/password/i), { target: { value: 'password' } });
+    fireEvent.click(screen.getByRole('button', { name: /login/i }));
+
+    await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith('/admindashboard'));
+  });
+
+  it('should handle unknown role', async () => {
+    signInWithEmailAndPassword.mockResolvedValue({ user: { uid: 'testuid' } });
+    getDoc.mockResolvedValue({ exists: jest.fn().mockReturnValue(true), data: jest.fn().mockReturnValue({ role: 'unknown' }) });
+
+    await act(async () => {
+      render(
+        <Router>
+          <Login />
+        </Router>
+      );
+    });
+
+    fireEvent.change(screen.getByLabelText(/email/i), { target: { value: 'test@example.com' } });
+    fireEvent.change(screen.getByLabelText(/password/i), { target: { value: 'password' } });
+    fireEvent.click(screen.getByRole('button', { name: /login/i }));
+
+    const errorMessage = await screen.findByText(/error determining user role. please contact support./i);
+    expect(errorMessage).toBeInTheDocument();
+  });
+
+  it('should handle user data not found', async () => {
+    signInWithEmailAndPassword.mockResolvedValue({ user: { uid: 'testuid' } });
+    getDoc.mockResolvedValue({ exists: jest.fn().mockReturnValue(false) });
+  
+    await act(async () => {
+      render(
+        <Router>
+          <Login />
+        </Router>
+      );
+    });
+  
+    fireEvent.change(screen.getByLabelText(/email/i), { target: { value: 'test@example.com' } });
+    fireEvent.change(screen.getByLabelText(/password/i), { target: { value: 'password' } });
+    fireEvent.click(screen.getByRole('button', { name: /login/i }));
+  
+    const errorMessage = await screen.findByText((content, element) => {
+      return content.startsWith('Error determining user role');
+    });
+    expect(errorMessage).toBeInTheDocument();
+  });
+  
+
 });
