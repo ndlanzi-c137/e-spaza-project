@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { BrowserRouter as Router } from 'react-router-dom';
-import SignupShopper from '../src/components/Shopper/SignupShopper'; // Adjust the path as needed
+import SignupShopper from '../src/components/Shopper/SignupShopper';
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 
@@ -30,10 +30,15 @@ jest.mock('react-router-dom', () => ({
 
 describe('SignupShopper Component', () => {
   const mockNavigate = jest.fn();
+  const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
 
   beforeEach(() => {
     jest.clearAllMocks();
     require('react-router-dom').useNavigate.mockReturnValue(mockNavigate);
+  });
+
+  afterAll(() => {
+    consoleSpy.mockRestore();
   });
 
   it('should render the sign-up form', () => {
@@ -69,6 +74,21 @@ describe('SignupShopper Component', () => {
     expect(passwordInput.value).toBe('Password123!');
   });
 
+  it('should validate password and show error message if invalid', async () => {
+    render(
+      <Router>
+        <SignupShopper />
+      </Router>
+    );
+
+    fireEvent.change(screen.getByLabelText(/password/i), { target: { value: 'pass' } });
+    fireEvent.click(screen.getByRole('button', { name: /create account/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText(/Password must be at least 8 characters long/)).toBeInTheDocument();
+    });
+  });
+
   it('should handle successful signup', async () => {
     createUserWithEmailAndPassword.mockResolvedValue({
       user: { uid: 'testuid' }
@@ -92,7 +112,9 @@ describe('SignupShopper Component', () => {
     fireEvent.change(screen.getByLabelText(/password/i), { target: { value: 'Password123!' } });
     fireEvent.click(screen.getByRole('button', { name: /create account/i }));
 
-    await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith('/shopperdashboard'));
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith('/shopperdashboard');
+    });
   });
 
   it('should handle signup error', async () => {
@@ -135,6 +157,25 @@ describe('SignupShopper Component', () => {
 
     fireEvent.click(screen.getByAltText(/sign up with google/i));
 
-    await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith('/shopperdashboard'));
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith('/shopperdashboard');
+    });
+  });
+
+  it('should handle Google sign-up error', async () => {
+    signInWithPopup.mockRejectedValue(new Error('Google sign-in failed'));
+
+    await act(async () => {
+      render(
+        <Router>
+          <SignupShopper />
+        </Router>
+      );
+    });
+
+    fireEvent.click(screen.getByAltText(/sign up with google/i));
+
+    const errorMessage = await screen.findByText(/Google sign-in failed/i);
+    expect(errorMessage).toBeInTheDocument();
   });
 });
