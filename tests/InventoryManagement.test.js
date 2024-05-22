@@ -23,10 +23,14 @@ jest.mock('firebase/firestore', () => ({
       {
         id: '1',
         data: () => ({ name: 'Item 1', quantity: 10, price: 5 })
+      },
+      {
+        id: '2',
+        data: () => ({ name: 'Item 2', quantity: 5, price: 10 })
       }
     ]
   }),
-  addDoc: jest.fn().mockResolvedValue({ id: '2' }),
+  addDoc: jest.fn().mockResolvedValue({ id: '3' }),
   updateDoc: jest.fn(),
   doc: jest.fn(),
   query: jest.fn(),
@@ -63,4 +67,61 @@ describe('InventoryManagement Component', () => {
     });
   });
 
+  it('should add a new item', async () => {
+    await act(async () => {
+      render(<InventoryManagement />);
+    });
+
+    // Mock setting shopId
+    fireEvent.change(screen.getByPlaceholderText('Item Name'), { target: { value: 'New Item' } });
+    fireEvent.change(screen.getByPlaceholderText('Quantity'), { target: { value: '15' } });
+    fireEvent.change(screen.getByPlaceholderText('Price'), { target: { value: '7.5' } });
+    fireEvent.change(screen.getByPlaceholderText('Image URL'), { target: { value: 'http://example.com/image.jpg' } });
+
+    console.log('Adding new item...');
+    console.log('New item values:', {
+      name: screen.getByPlaceholderText('Item Name').value,
+      quantity: screen.getByPlaceholderText('Quantity').value,
+      price: screen.getByPlaceholderText('Price').value,
+      imageUrl: screen.getByPlaceholderText('Image URL').value,
+    });
+
+    fireEvent.click(screen.getByText('Add Item'));
+
+    console.log(screen.debug());
+    await waitFor(() => {
+      expect(addDoc).toHaveBeenCalled();
+      expect(screen.getByText('Item New Item added successfully')).toBeInTheDocument();
+    });
+  });
+
+  it('should not add a new item if required fields are missing', async () => {
+    await act(async () => {
+      render(<InventoryManagement />);
+    });
+
+    fireEvent.change(screen.getByPlaceholderText('Item Name'), {target: { value: '' } });
+    fireEvent.change(screen.getByPlaceholderText('Quantity'), { target: { value: '' } });
+    fireEvent.change(screen.getByPlaceholderText('Price'), { target: { value: '' } });
+    fireEvent.change(screen.getByPlaceholderText('Image URL'), { target: { value: '' } });
+
+    fireEvent.click(screen.getByText('Add Item'));
+
+    await waitFor(() => {
+      expect(addDoc).not.toHaveBeenCalled();
+      expect(screen.queryByText('Item added successfully')).not.toBeInTheDocument();
+    });
+  });
+
+  it('should fetch inventory and set shopId on component mount', async () => {
+    await act(async () => {
+      render(<InventoryManagement />);
+    });
+
+    await waitFor(() => {
+      expect(getDocs).toHaveBeenCalledTimes(2); // once for user and once for inventory
+      expect(screen.getByText('Item 1 - 10')).toBeInTheDocument();
+    });
+  });
 });
+
