@@ -3,6 +3,7 @@
 
 name: Build and deploy Node.js app to Azure Web App - e-spaza-web
 
+
 on:
   push:
     branches:
@@ -21,17 +22,23 @@ jobs:
         with:
           node-version: '18.x'
 
-      - name: npm install, build, and test
+      - name: Install dependencies with legacy peer deps
         run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
+          npm install --legacy-peer-deps
+
+      - name: Build the app
+        run: |
+          npm run build
+
+      - name: Run tests
+        run: |
+          npm run test
       
-      - name: Upload artifact for deployment job
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: node-app
-          path: .
+          name: build
+          path: build
 
   deploy:
     runs-on: ubuntu-latest
@@ -40,26 +47,26 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write # This is required for requesting the JWT
 
     steps:
-      - name: Download artifact from build job
+      - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
-          name: node-app
+          name: build
+          path: build
       
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D553399E9D294899A2B9553FEFF05AB9 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_C07DF2C79E3A4DC783D33FB04C0D5027 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_280FA2E07B5840BFAA6E4ED67898204A }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_EEF02518A52E494E8C10EB28B292ADD5 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_0653573FB7B14744A1D1A157555389B1 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C5C2BEAD96394352A58CAE09494AFF05 }}
 
-      - name: 'Deploy to Azure Web App'
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
           app-name: 'e-spaza-web'
           slot-name: 'Production'
-          package: .
-          
+          package: build
