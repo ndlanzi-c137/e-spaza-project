@@ -3,7 +3,7 @@ import "./AdminDashboard.css";
 import { useNavigate } from "react-router-dom";
 import InventoryManagement from "./Staff/InventoryManagement";
 import OrderManagement from "./Staff/OrderManagement";
-import Navbar from "./Shopper/Navbar";
+import Navbar from "./Staff/NavbarStaff";
 
 function StaffDashboard(){
 
