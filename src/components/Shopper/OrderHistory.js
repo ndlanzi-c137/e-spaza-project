@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db, auth } from "../../firebaseConfig"; 
 import { useNavigate } from "react-router-dom";
+import Navbar from './NavbarShopper';
 
 function OrderHistory() {
   const [orders, setOrders] = useState([]);
@@ -42,8 +43,10 @@ function OrderHistory() {
   }
 
   return (
-    <div className="orderHistory">
-      <h2>Your Orders</h2>
+    <div className="orderHistory"  style={{ backgroundColor: '#fcf9f9' }}>
+      <Navbar />
+      <h2 style={{ color: '#2ECC40', fontWeight: 'bold', fontSize: '2.5rem', textAlign: 'center' }}
+      >Your Orders</h2>
       {orders.length === 0 ? (
         <p>You have no orders.</p>
       ) : (

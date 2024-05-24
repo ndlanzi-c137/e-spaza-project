@@ -3,6 +3,7 @@ import { db } from "../../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import { useParams, useNavigate } from "react-router-dom";
 import { useStateValue } from "./StateProvider.js";
+ 
 
 const Food = () => {
   const { categoryName } = useParams();
@@ -10,6 +11,21 @@ const Food = () => {
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
   const [{ basket }, dispatch] = useStateValue();
+
+  const styles = {
+    button: {
+      padding: '10px 20px',
+      fontSize: '16px',
+      cursor: 'pointer',
+      border: 'none',
+      borderRadius: '5px',
+      backgroundColor: '#2ECC40',
+      color: 'white',
+    },
+    buttonHover: {
+      backgroundColor: '#28a745',
+    },
+  };
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -53,7 +69,7 @@ const Food = () => {
         id: id,
         title: title,
         image: image,
-        price: price,  // Ensure price is included here
+        price: price, 
       },
     });
   };
@@ -63,6 +79,7 @@ const Food = () => {
     : foods;
 
   const handleCategoryClick = (categoryName) => {
+
     navigate(`/category/${categoryName}`);
   };
 
@@ -72,7 +89,9 @@ const Food = () => {
 
   return (
     <div style={{ maxWidth: "1640px", margin: "auto", padding: "16px" }}>
+
       <h1
+
         style={{
           color: "#2ECC40",
           fontWeight: "bold",
@@ -99,6 +118,8 @@ const Food = () => {
             border: "none",
             borderRadius: "4px",
           }}
+          onMouseEnter={(e) => (e.target.style.backgroundColor = styles.buttonHover.backgroundColor)}
+          onMouseLeave={(e) => (e.target.style.backgroundColor = styles.button.backgroundColor)}
         >
           All
         </button>
@@ -106,6 +127,8 @@ const Food = () => {
           <button
             key={index}
             onClick={() => handleCategoryClick(category.name)}
+            onMouseEnter={(e) => (e.target.style.backgroundColor = styles.buttonHover.backgroundColor)}
+            onMouseLeave={(e) => (e.target.style.backgroundColor = styles.button.backgroundColor)}
             style={{
               margin: "0 8px",
               padding: "8px 16px",
@@ -138,6 +161,7 @@ const Food = () => {
               transition: "transform 0.3s ease",
             }}
           >
+    
             <img
               src={item.image}
               alt={item.name}
@@ -184,6 +208,8 @@ const Food = () => {
                 onClick={() =>
                   addToCart(item.id, item.name, item.image, item.price)
                 }
+                onMouseEnter={(e) => (e.target.style.backgroundColor = styles.buttonHover.backgroundColor)}
+                onMouseLeave={(e) => (e.target.style.backgroundColor = styles.button.backgroundColor)}
               >
                 Add to cart
               </button>

@@ -19,7 +19,7 @@ const Spazas = () => {
     const fetchData = async () => {
       const shopsCollection = collection(db, 'shops');
       const shopsSnapshot = await getDocs(shopsCollection);
-      const shopsList = shopsSnapshot.docs.map(doc => doc.data());
+      const shopsList = shopsSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
       setShops(shopsList);
       setFilteredShops(shopsList);
     };
@@ -27,8 +27,8 @@ const Spazas = () => {
     fetchData();
   }, []);
 
-  const handleShopClick = (shopName) => {
-    navigate(`/shop/${shopName}`);
+  const handleShopClick = (shopId) => {
+    navigate(`/shop/${shopId}`);
   };
 
   const filterType = (category) => {
@@ -55,7 +55,7 @@ const Spazas = () => {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 200px))', gap: '24px', paddingTop: '16px', justifyContent: 'center' }}>
         {filteredShops.map((item, index) => (
-          <div key={index} onClick={() => handleShopClick(item.name)} style={{ border: '1px solid #E2E8F0', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', transition: 'transform 0.3s ease', cursor: 'pointer' }}>
+          <div key={index} onClick={() => handleShopClick(item.id)} style={{ border: '1px solid #E2E8F0', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', transition: 'transform 0.3s ease', cursor: 'pointer' }}>
             <img src={item.image} alt={item.name} style={{ width: '100%', height: '200px', objectFit: 'cover', borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }} />
             <div style={{ padding: '8px', display: 'flex', justifyContent: 'space-between' }}>
               <p style={{ fontWeight: 'bold' }}>{item.name}</p>

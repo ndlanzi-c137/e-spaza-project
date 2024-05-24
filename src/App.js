@@ -9,6 +9,7 @@ import SignupAdmin from './components/Admin/SignupAdmin';
 import SignupStaff from './components/Staff/SignupStaff';
 import Food from './components//Shopper/Food';
 import Spazas from './components/Shopper/Spazas';
+import ShopDetails from './components/Shopper/ShopDetails';
 import Categories from './components/Shopper/Categories';
 import SignupShopper from './components/Shopper/SignupShopper';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -37,8 +38,7 @@ function App() {
           <Route path="/category/:categoryName" element={<Food />} />
            <Route path="/order-history" element={<OrderHistory />} />
           <Route path="/order-status" element={<OrderStatus />} />
-          <Route path="/shop/:shopName" element={<Spazas />}
-          />
+          <Route path="/shop/:shopId" element={<ShopDetails />} />
         </Routes>
       </Router>
     </div>

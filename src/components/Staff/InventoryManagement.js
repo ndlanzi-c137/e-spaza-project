@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const InventoryManagement = () => {
   const [inventory, setInventory] = useState([]);
   const [shopId, setShopId] = useState(null);
+  const [shop, setShop] = useState(null);
   const [newItemName, setNewItemName] = useState('');
   const [newItemQuantity, setNewItemQuantity] = useState('');
   const [newItemPrice, setNewItemPrice] = useState('');
@@ -23,8 +24,19 @@ const InventoryManagement = () => {
         if (!userDoc.empty) {
           const userData = userDoc.docs[0].data();
           setShopId(userData.shopId);
+          fetchShopDetails(userData.shopId);
           fetchInventory(userData.shopId);
         }
+      }
+    };
+
+    const fetchShopDetails = async (shopId) => {
+      const shopsCollection = collection(db, 'shops');
+      const shopQuery = query(shopsCollection, where('adminId', '==', shopId));
+      const shopSnapshot = await getDocs(shopQuery);
+      const shopData = shopSnapshot.docs[0]?.data();
+      if (shopData) {
+        setShop(shopData);
       }
     };
 
@@ -46,17 +58,15 @@ const InventoryManagement = () => {
   };
 
   const handleAddItem = async () => {
-    console.log('handleAddItem called');
-    console.log('Current shopId:', shopId);
-    if (newItemName && newItemQuantity && newItemPrice && shopId) {
+    if (newItemName && newItemQuantity && newItemPrice && shopId && shop) {
       const newItem = {
         name: newItemName,
         quantity: parseInt(newItemQuantity, 10),
         price: parseFloat(newItemPrice),
         shopId: shopId,
-        imageUrl: newItemImageUrl
+        imageUrl: newItemImageUrl,
+        shopCategory: shop.category
       };
-      console.log('Adding new item:', newItem);
       const docRef = await addDoc(collection(db, 'inventory'), newItem);
       setInventory([...inventory, { id: docRef.id, ...newItem }]);
       setNewItemName('');
@@ -74,6 +84,12 @@ const InventoryManagement = () => {
       <h1 style={{ color: '#2ECC40', fontWeight: 'bold', fontSize: '2.5rem', textAlign: 'center' }}>
         Inventory Management
       </h1>
+      {shop && (
+        <div>
+          <h2>Shop: {shop.name}</h2>
+          <h3>Category: {shop.category}</h3>
+        </div>
+      )}
       <ul>
         {inventory.map(item => (
           <li key={item.id} style={{ marginBottom: '8px', listStyle: 'none' }}>

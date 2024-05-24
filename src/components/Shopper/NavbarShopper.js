@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { AiOutlineMenu, AiOutlineSearch, AiOutlineClose, AiFillTag } from "react-icons/ai";
+import { AiOutlineMenu, AiOutlineSearch, AiOutlineClose, AiFillTag, AiOutlineHome } from "react-icons/ai";
 import { BsFillCartFill, BsFillSaveFill } from "react-icons/bs";
 import { FaUserFriends, FaWallet } from "react-icons/fa";
 import { MdFavorite, MdHelp } from "react-icons/md";
@@ -47,17 +47,20 @@ const Navbar = () => {
         <div onClick={() => setNav(!nav)} style={{ cursor: "pointer" }}>
           <AiOutlineMenu size={30} style={{ color: "#2ECC40" }} />
         </div>
-        <h1
-          style={{
-            fontSize: "1.8rem",
-            fontWeight: "bold",
-            color: "#2ECC40",
-            paddingLeft: "15px",
-            margin: "0",
-          }}
-        >
-          E-Spaza
-        </h1>
+        <Link to="/shopperdashboard" style={{ display: "flex", alignItems: "center", textDecoration: "none", color: "inherit" }}>
+          <AiOutlineHome size={30} style={{ color: "#2ECC40", paddingLeft: "15px" }} />
+          <h1
+            style={{
+              fontSize: "1.8rem",
+              fontWeight: "bold",
+              color: "#2ECC40",
+              paddingLeft: "15px",
+              margin: "0",
+            }}
+          >
+            E-Spaza
+          </h1>
+        </Link>
       </div>
 
       {/* Search Input */}
