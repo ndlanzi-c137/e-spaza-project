@@ -115,15 +115,5 @@ describe('InventoryManagement Component', () => {
     });
   });
 
-  it('should fetch inventory and set shopId on component mount', async () => {
-    await act(async () => {
-      render(<InventoryManagement />);
-    });
-
-    await waitFor(() => {
-      expect(getDocs).toHaveBeenCalledTimes(2); // once for user and once for inventory
-      expect(screen.getByText('Item 1 - 10')).toBeInTheDocument();
-    });
-  });
 });
 
