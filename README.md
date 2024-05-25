@@ -17,9 +17,10 @@
 e-spaza-project is a React-based web application designed to facilitate online shopping and management for spaza shops. This project aims to provide an intuitive interface for shoppers, staff, and admins to interact with the system efficiently.
 
 ## Video Preview
-[![Video Preview](https://github.com/Starkc137/Restaurant-Tracker/assets/105763843/58d89a21-10da-4ff4-bbaf-d4885f981cef)](https://youtu.be/ss7lTyD7JxE)
 
-Link to full demo: [https://youtu.be/ss7lTyD7JxE](https://youtu.be/ss7lTyD7JxE)
+[![Video Preview](https://www.youtube.com/watch?v=_cq4PpM56EM/maxresdefault.jpg)](https://www.youtube.com/watch?v=_cq4PpM56EM)
+
+Link to full demo: [https://www.youtube.com/watch?v=_cq4PpM56EM]([https://youtu.be/ss7lTyD7JxE](https://www.youtube.com/watch?v=_cq4PpM56EM))
 
 ## Prerequisites
 Before you begin, ensure you have met the following requirements:
