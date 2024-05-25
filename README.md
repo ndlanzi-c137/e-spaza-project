@@ -28,7 +28,7 @@ Link to full demo: [https://www.youtube.com/watch?v=_cq4PpM56EM](https://www.you
 
 ## Prerequisites
 Before you begin, ensure you have met the following requirements:
-- Node.js (>= 14.x.x) and npm (>= 6.x.x) installed on your machine.
+- Node.js (>= 16.x.x) and npm (>= 6.x.x) installed on your machine.
 - Git installed on your machine.
 
 ## Installation
@@ -36,7 +36,7 @@ Follow these steps to set up and run the project locally:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/e-spaza-project.git
+   git clone https://github.com/ndlanzi-c137/e-spaza-project.git
    cd e-spaza-project
    ```
 
