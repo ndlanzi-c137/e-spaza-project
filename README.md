@@ -14,14 +14,14 @@ Click on the badge to view coverage on coveralls
 - [Running the Application](#running-the-application)
 - [Common Issues](#common-issues)
 - [Contributing](#contributing)
-- [License](#license)
+- [License and Usage](#license-and-usage)
 
 ## Introduction
 e-spaza-project is a React-based web application designed to facilitate online shopping and management for spaza shops. This project aims to provide an intuitive interface for shoppers, staff, and admins to interact with the system efficiently.
 
 ## Video Preview
 
-[![Video Preview](https://img.youtube.com/vi/_cq4PpM56EM/maxresdefault.jpg)](https://www.youtube.com/watch?v=_cq4PpM56EM)
+[![Video Preview](https://github.com/ndlanzi-c137/e-spaza-project/assets/160495606/947817bc-f3ae-4705-a734-a6137046c353)](https://www.youtube.com/watch?v=_cq4PpM56EM)
 
 Link to full demo: [https://www.youtube.com/watch?v=_cq4PpM56EM](https://www.youtube.com/watch?v=_cq4PpM56EM)
 
@@ -90,5 +90,15 @@ To contribute to this project, follow these steps:
    ```
 5. **Create a pull request.**
 
-## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## License and Usage
+
+This project is a school project and is intended for educational purposes only. Unauthorized copying, distribution, or use of this code without explicit permission from the authors is prohibited. Please contact the authors if you have any questions or wish to use any part of this project.
+
+### Authors:
+- Nhlakanipho Ndlanzi: 2451244@students.wits.ac.za
+- Mbongeni Mhlongo: 2580100@students.wits.ac.za
+- Nkosbonile Mteto: 2553616@students.wits.ac.za
+- Nqobile Maseko: 2323126@students.wits.ac.za
+
+
