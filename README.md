@@ -18,9 +18,10 @@ e-spaza-project is a React-based web application designed to facilitate online s
 
 ## Video Preview
 
-[![Video Preview](https://www.youtube.com/watch?v=_cq4PpM56EM/maxresdefault.jpg)](https://www.youtube.com/watch?v=_cq4PpM56EM)
+[![Video Preview](https://img.youtube.com/vi/_cq4PpM56EM/maxresdefault.jpg)](https://www.youtube.com/watch?v=_cq4PpM56EM)
 
-Link to full demo: [https://www.youtube.com/watch?v=_cq4PpM56EM]([https://youtu.be/ss7lTyD7JxE](https://www.youtube.com/watch?v=_cq4PpM56EM))
+Link to full demo: [https://www.youtube.com/watch?v=_cq4PpM56EM](https://www.youtube.com/watch?v=_cq4PpM56EM)
+
 
 ## Prerequisites
 Before you begin, ensure you have met the following requirements:
