@@ -21,7 +21,7 @@ e-spaza-project is a React-based web application designed to facilitate online s
 
 ## Video Preview
 
-[![Video Preview](https://github.com/ndlanzi-c137/e-spaza-project/assets/160495606/947817bc-f3ae-4705-a734-a6137046c353)](https://www.youtube.com/watch?v=_cq4PpM56EM)
+https://github.com/ndlanzi-c137/e-spaza-project/assets/160495606/58a1210f-8d1a-488f-a13a-2ec319bfdbcd
 
 Link to full demo: [https://www.youtube.com/watch?v=_cq4PpM56EM](https://www.youtube.com/watch?v=_cq4PpM56EM)
 
